@@ -28,3 +28,6 @@ https://omarwright07.github.io/weather-dashboard/
 
 ## GitHub Location
 https://github.com/omarwright07/weather-dashboard
+
+## Weather API Location
+https://openweathermap.org/api/one-call-api

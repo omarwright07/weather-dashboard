@@ -1,14 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" />
     <link rel="stylesheet" href="./assets/css/style.css" />
+    <title>Weather Dashboard</title>
+
 </head>
+
 <body>
-    <h1>Weather Dashboard</h1>
+    <header class="header container col-12 d-flex justify-content-center">
+        <h1>Weather Dashboard</h1>
+    </header>
+
+    <section class="container mt-2 col-12 row">
+        <!-- Search Box Section -->
+        <article class="col-4 d-flex flex-column">
+            <div class="search-box pb-4 d-flex flex-column">
+                <label for="search" class="bold">Search for a City:</label>
+                <input type="text" id="search" class="mb-3" placeholder="San Antonio">
+                <button class="search-btn bold">Search</button>
+            </div>
+            <div id="search-history" class="pt-3 d-flex flex-column">
+                <!-- Stores all the search history -->
+                <button class="search-btn-history">Austin</button>
+                <button class="search-btn-history">Chicago</button>
+                <button class="search-btn-history">New York</button>
+                <button class="search-btn-history">Orlando</button>
+                <button class="search-btn-history">San Franciso</button>
+            </div>
+        </article>
+
+        <!-- Forecast Section -->
+        <article class="col-8">
+            <!-- Today Forecast Section -->
+            <section id="current-forecast" class="current">
+                <!-- Generate today forecast here -->
+                <h2 id="" class="bold">Austin (3/30/2021) <span class="oi oi-sun"></span></h2>
+                <ul>
+                    <li id="today-temp">Temp: 74.01 &degF</li>
+                    <li id="today-wind">Wind: 6.67 MPH</li>
+                    <li id="today-humidity">Humidity: 46 %</li>
+                    <li>UV Index: <span id="uv-index" class="uvindex-favorable">0.47</span></li>
+                </ul>
+            </section>
+            <!-- Today Forecast Ends -->
+
+            <!-- 5 Day Forecast Section -->
+            <section class="mt-4">
+                <h3 class="bold">5-Day Forecast:</h3>
+                <div id="daysforecast-container" class="row">
+                <!-- Stores all the day forecasts cards here -->
+                    <div class="daysforecast col d-flex flex-column align-items-center">
+                        <h4 class="center">3/31/2021</h4>
+                        <span class="icon o oi oi-sun"></span>
+                        <div class="d-flex flex-column align-items-start">
+                            <p>Temp: 73.72 &degF</p>
+                            <p>Wind 9.53 MPH</p>
+                            <p>Humidity: 66%</p>
+                        </div>
+                    </div>
+
+                    <div class="daysforecast col d-flex flex-column align-items-center">
+                        <h4 class="center">3/31/2021</h4>
+                        <span class="icon o oi oi-sun"></span>
+                        <div class="d-flex flex-column align-items-start">
+                            <p>Temp: 73.72 &degF</p>
+                            <p>Wind 9.53 MPH</p>
+                            <p>Humidity: 66%</p>
+                        </div>
+                    </div>
+
+                    <div class="daysforecast col d-flex flex-column align-items-center">
+                        <h4 class="center">3/31/2021</h4>
+                        <span class="icon o oi oi-sun"></span>
+                        <div class="d-flex flex-column align-items-start">
+                            <p>Temp: 73.72 &degF</p>
+                            <p>Wind 9.53 MPH</p>
+                            <p>Humidity: 66%</p>
+                        </div>
+                    </div>
+
+                    <div class="daysforecast col d-flex flex-column align-items-center">
+                        <h4 class="center">3/31/2021</h4>
+                        <span class="icon o oi oi-sun"></span>
+                        <div class="d-flex flex-column align-items-start">
+                            <p>Temp: 73.72 &degF</p>
+                            <p>Wind 9.53 MPH</p>
+                            <p>Humidity: 66%</p>
+                        </div>
+                    </div>
+
+                    <div class="daysforecast col d-flex flex-column align-items-center">
+                        <h4 class="center">3/31/2021</h4>
+                        <span class="icon o oi oi-sun"></span>
+                        <div class="d-flex flex-column align-items-start">
+                            <p>Temp: 73.72 &degF</p>
+                            <p>Wind 9.53 MPH</p>
+                            <p>Humidity: 66%</p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+            <!-- 5 Day Forecast Ends -->
+        </article>
+    </section>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>
+
 </html>
