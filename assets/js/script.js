@@ -12,26 +12,26 @@ var apiKey = "a90b37582c4f712e55eb4bd2432a468a"
 // ###########################################################
 // ###########################################################
 
-// var saveTimeBlock = function (id) {
-//     console.log("Saving...")
-//     localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
-// };
+// Save and Load Functions ____________________________________
+var saveSearchHistory = function () {
+    console.log("Saving...")
+    localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+};
 
-// var loadTimeBlocks = function () {
-//     var savedtimeBlocks = JSON.parse(localStorage.getItem("searchHistory"));
-
-//     // if nothing in localStorage, create a new object to track all description
-//     if (!savedtimeBlocks) {
-//         console.log("There was no local save! Setting default values!");
-//         for (i = 0; i < timeBlocksLength; i++) {
-//             setTimeBlocksText();
-//         }
-//     } else {
-//         console.log("Loaded from local save!")
-//         timeBlocks = JSON.parse(localStorage.getItem("timeBlocks"));
-//         setTimeBlocksText();
-//     }
-// };
+var loadSearchHistory = function () {
+    var savedSearchHistory = JSON.parse(localStorage.getItem("searchHistory"));
+    // if nothing in localStorage, create a new object to track all description
+    if (!savedSearchHistory) {
+        console.log("There was no local save! Setting default values!");
+    } else {
+        console.log("Loaded from local save!")
+        searchHistory = JSON.parse(localStorage.getItem("searchHistory"));
+        for (i = 0; i < searchHistory.length; i++) {
+            createSearchBTN(searchHistory[i]);
+            console.log("creating button" + (i + 1));
+        }
+    }
+};
 
 // Generate Forecast Functions ____________________________________
 var generateForecast = function () {
@@ -43,9 +43,6 @@ var generateForecast = function () {
     console.log(cityName);
     fetchWeatherInfo();
 };
-
-
-
 
 var clearForecastSection = function () {
     console.log("Removing Forecasts...");
@@ -76,7 +73,8 @@ var fetchWeatherInfo = function () {
                                     createTodayForecast(dataCurrent, dataForecast.city.name);
                                     createFutureForecast(dataCurrent);
                                     if (!searchHistory.includes(dataForecast.city.name)) {
-                                    createSearchBTN(dataForecast.city.name);
+                                        createSearchBTN(dataForecast.city.name);
+                                        saveSearchHistory();
                                     }
                                 })
                             };
@@ -224,7 +222,9 @@ var createSearchBTN = function (location) {
         .addClass("search-btn-history")
         .text(location);
     $("#search-history").append(searchHistoryBTN);
-    searchHistory.push(location);
+    if (!searchHistory.includes(location)) {
+        searchHistory.push(location);
+    }
     console.log(searchHistory);
 };
 
@@ -232,12 +232,9 @@ var createSearchBTN = function (location) {
 // ###########################################################
 
 $(".search-btn").on("click", generateForecast);
-// $("#search-history").on("click", function (event) {
-//     console.log("click");
-//     console.log(event.target.innerHTML);
-// });
-
 $("#search-history").on("click", ".search-btn-history", function (event) {
     console.log("click");
     console.log(event.target.innerHTML);
 });
+
+loadSearchHistory();
