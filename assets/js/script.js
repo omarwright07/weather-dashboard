@@ -28,7 +28,6 @@ var loadSearchHistory = function () {
         searchHistory = JSON.parse(localStorage.getItem("searchHistory"));
         for (i = 0; i < searchHistory.length; i++) {
             createSearchBTN(searchHistory[i]);
-            console.log("creating button" + (i + 1));
         }
     }
 };
@@ -81,13 +80,12 @@ var fetchWeatherInfo = function () {
                         })
                 });
             } else {
-                alert('Error: Location Not Found');
-                console.log(response);
+                alert('Location Not Found!');
             }
         })
         // unable to connect to OpenWeather
         .catch(function (error) {
-            alert("Unable to connect to OpenWeather");
+            console.log(error);
         });
 };
 
@@ -225,7 +223,6 @@ var createSearchBTN = function (location) {
     if (!searchHistory.includes(location)) {
         searchHistory.push(location);
     }
-    console.log(searchHistory);
 };
 
 // ###########################################################
@@ -233,8 +230,8 @@ var createSearchBTN = function (location) {
 
 $(".search-btn").on("click", generateForecast);
 $("#search-history").on("click", ".search-btn-history", function (event) {
-    console.log("click");
-    console.log(event.target.innerHTML);
+    cityName = event.target.innerHTML;
+    fetchWeatherInfo();
 });
 
 loadSearchHistory();
