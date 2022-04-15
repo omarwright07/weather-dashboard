@@ -5,10 +5,9 @@ var weatherIcons = {
     rainy: "oi oi-rain",
     stormy: "oi oi-bolt",
 };
-var cityName = "London";
+var cityName = "";
 var searchHistory = [];
 var apiKey = "a90b37582c4f712e55eb4bd2432a468a"
-var apiForecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + apiKey + "&units=imperial";
 
 // ###########################################################
 // ###########################################################
@@ -34,28 +33,34 @@ var apiForecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cit
 //     }
 // };
 
-
 // Generate Forecast Functions ____________________________________
 var generateForecast = function () {
     console.log("Generating Forecast...")
-    clearForecastSection();
+    cityName = $("#search").val();
+    if (cityName == "") {
+        cityName = $("#search").attr("placeholder");
+    }
+    console.log(cityName);
     fetchWeatherInfo();
 };
+
+
+
 
 var clearForecastSection = function () {
     console.log("Removing Forecasts...");
     $("#current-forecast").remove();
     $("#future-forecast").remove();
-}
+};
 
 var fetchWeatherInfo = function () {
+    var apiForecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + apiKey + "&units=imperial";
     console.log(apiForecastURL);
     fetch(apiForecastURL)
         .then(function (responseForecast) {
             // request was successful
             if (responseForecast.ok) {
                 responseForecast.json().then(function (dataForecast) {
-                    alert("Got a response");
                     console.log(dataForecast);
                     var cityLat = dataForecast.city.coord.lat;
                     var cityLon = dataForecast.city.coord.lon;
@@ -67,9 +72,12 @@ var fetchWeatherInfo = function () {
                                 responseCurrent.json().then(function (dataCurrent) {
                                     console.log(apiCurrentURL);
                                     console.log(dataCurrent);
-                                    createTodayForecast(dataCurrent);
+                                    clearForecastSection();
+                                    createTodayForecast(dataCurrent, dataForecast.city.name);
                                     createFutureForecast(dataCurrent);
-                                    createSearchBTN(dataForecast.city.name); 
+                                    if (!searchHistory.includes(dataForecast.city.name)) {
+                                    createSearchBTN(dataForecast.city.name);
+                                    }
                                 })
                             };
                         })
@@ -83,9 +91,9 @@ var fetchWeatherInfo = function () {
         .catch(function (error) {
             alert("Unable to connect to OpenWeather");
         });
-}
+};
 
-var createTodayForecast = function (data) {
+var createTodayForecast = function (data, city) {
     console.log("Creating Current Forecast...");
     var date = moment(data.daily[0].dt * 1000).format("MM.DD.YYYY");
 
@@ -95,7 +103,7 @@ var createTodayForecast = function (data) {
 
     var todayHeadingEl = $("<h2>")
         .addClass("bold")
-        .text(cityName + " (" + date + ") ");
+        .text(city + " (" + date + ") ");
     // Weather Icon
     var todayHeadingIconEl = $("<span>");
     switch (data.daily[0].weather[0].icon) {
@@ -220,12 +228,16 @@ var createSearchBTN = function (location) {
     console.log(searchHistory);
 };
 
-
-
 // ###########################################################
 // ###########################################################
 
 $(".search-btn").on("click", generateForecast);
-$("#search-btn-history").on("click", "search-btn-history", function () {
+// $("#search-history").on("click", function (event) {
+//     console.log("click");
+//     console.log(event.target.innerHTML);
+// });
+
+$("#search-history").on("click", ".search-btn-history", function (event) {
     console.log("click");
+    console.log(event.target.innerHTML);
 });
